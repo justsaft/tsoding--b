@@ -24,14 +24,29 @@ jobs:
           apt-get update
           apt-get install -qq -y rustup
           rustup toolchain install stable --no-self-update --profile minimal
-      - name: Install Dependencies
+      - name: Setup X Virtual Framebuffer for Wine
         run: |
-          dpkg --add-architecture i386
           apt-get update
-          apt-get install -qq -y clang make fasm mingw-w64 wine64 gcc-aarch64-linux-gnu qemu-user wine32:i386 xvfb git xxd
+          apt-get install -qq -y xvfb
           export DISPLAY=:99
           Xvfb :99 -screen 0 1024x768x16 &
           echo "DISPLAY=:99" >> $GITHUB_ENV
+      - name: Setup Wine
+        runs: |
+          dpkg --add-architecture i386
+          apt-get update
+          apt-get wine64 wine32:i386
+          wineserver -k
+          rm -rf ~/.wine
+          winecfg
+      - name: Correct image difference
+        run: |
+          apt-get update
+          apt-get install -qq -y git xxd
+      - name: Install Dependencies
+        run: |
+          apt-get update
+          apt-get install -qq -y clang make fasm mingw-w64 gcc-aarch64-linux-gnu qemu-user
           git clone https://git.sr.ht/~rabbits/uxn11
           cd uxn11
           make cli
