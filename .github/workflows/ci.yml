@@ -21,13 +21,13 @@ jobs:
         uses: actions/checkout@v4
       - name: Install Rust
         run: |
-          sudo apt-get install -qq -y rustup
+          apt-get install -qq -y rustup
           rustup toolchain install stable --no-self-update --profile minimal
       - name: Install Dependencies
         run: |
-          sudo dpkg --add-architecture i386
-          sudo apt-get update
-          sudo apt-get install -qq -y clang make fasm mingw-w64 wine64 gcc-aarch64-linux-gnu qemu-user wine32:i386 xvfb git xxd
+          dpkg --add-architecture i386
+          apt-get update
+          apt-get install -qq -y clang make fasm mingw-w64 wine64 gcc-aarch64-linux-gnu qemu-user wine32:i386 xvfb git xxd
           export DISPLAY=:99
           Xvfb :99 -screen 0 1024x768x16 &
           echo "DISPLAY=:99" >> $GITHUB_ENV
