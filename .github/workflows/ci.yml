@@ -35,7 +35,7 @@ jobs:
         run: |
           dpkg --add-architecture i386
           apt-get update
-          apt-get wine64 wine32:i386
+          apt-get install -qq -y wine64 wine32:i386
           wineserver -k
           rm -rf ~/.wine
           winecfg
