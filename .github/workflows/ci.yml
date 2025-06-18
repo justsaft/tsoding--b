@@ -45,6 +45,7 @@ jobs:
           apt-get update
           apt-get install -qq -y git xxd
       - name: Install Dependencies
+        if: always()
         run: |
           apt-get update
           apt-get install -qq -y clang make fasm mingw-w64 gcc-aarch64-linux-gnu qemu-user
@@ -52,4 +53,5 @@ jobs:
           cd uxn11
           make cli
       - name: Run Tests
+        if: always()
         run: PATH=$(realpath uxn11/bin):$PATH make btest
