@@ -15,12 +15,14 @@ jobs:
   btest:
     runs-on: ubuntu-24.04
     container:
-      image: ubuntu:24.04
+      image: ubuntu:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install Rust
         run: |
+          apt-get update
+          apt-get install -qq -y rustup
           rustup toolchain install stable --no-self-update --profile minimal
       - name: Install Dependencies
         run: |
