@@ -14,16 +14,20 @@ on:
 jobs:
   btest:
     runs-on: ubuntu-24.04
+    container:
+      image: ubuntu:24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install Rust
-        run: rustup toolchain install stable --no-self-update --profile minimal
+        run: |
+          sudo apt-get install -qq -y rustup
+          rustup toolchain install stable --no-self-update --profile minimal
       - name: Install Dependencies
         run: |
           sudo dpkg --add-architecture i386
           sudo apt-get update
-          sudo apt-get install -qq -y clang make fasm mingw-w64 wine64 gcc-aarch64-linux-gnu qemu-user wine32:i386 xvfb
+          sudo apt-get install -qq -y clang make fasm mingw-w64 wine64 gcc-aarch64-linux-gnu qemu-user wine32:i386 xvfb git xxd
           export DISPLAY=:99
           Xvfb :99 -screen 0 1024x768x16 &
           echo "DISPLAY=:99" >> $GITHUB_ENV
