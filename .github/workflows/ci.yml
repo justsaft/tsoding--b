@@ -32,7 +32,7 @@ jobs:
           Xvfb :99 -screen 0 1024x768x16 &
           echo "DISPLAY=:99" >> $GITHUB_ENV
       - name: Setup Wine
-        runs: |
+        run: |
           dpkg --add-architecture i386
           apt-get update
           apt-get wine64 wine32:i386
