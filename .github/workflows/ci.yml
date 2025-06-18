@@ -21,7 +21,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Install Rust
         run: |
-          apt-get install -qq -y rustup
           rustup toolchain install stable --no-self-update --profile minimal
       - name: Install Dependencies
         run: |
